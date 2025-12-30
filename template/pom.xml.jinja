@@ -11,8 +11,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <!-- Usually prefered to set the version this way over the configuration block -->
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
+    <javafx.version>25</javafx.version>
   </properties>
   <build>
     <plugins>
@@ -58,11 +59,26 @@
       <scope>test</scope>
     </dependency>
     <!-- Optional JavaFX for UI -->
-    <!-- <dependency> -->
-    <!-- <groupId>org.openjfx</groupId> -->
-    <!-- <artifactId>javafx-controls</artifactId> -->
-    <!-- <version>25</version> -->
-    <!-- </dependency> -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-graphics</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-base</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
     <!-- Optional FXGL for game dev -->
     <!-- <dependency> -->
     <!-- <groupId>com.github.almasb</groupId> -->
