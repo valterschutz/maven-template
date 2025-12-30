@@ -8,12 +8,12 @@
   <name>{{project_name}}</name>
   <url>http://maven.apache.org</url>
   <properties>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-      <!-- Usually prefered to set the version this way over the configuration block -->
-      <maven.compiler.source>21</maven.compiler.source>
-      <maven.compiler.target>21</maven.compiler.target>
-    </properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Usually prefered to set the version this way over the configuration block -->
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -46,5 +46,11 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    <!-- Optional FXGL for game dev -->
+    <!-- <dependency> -->
+    <!-- <groupId>com.github.almasb</groupId> -->
+    <!-- <artifactId>fxgl</artifactId> -->
+    <!-- <version>21.1</version> -->
+    <!-- </dependency> -->
   </dependencies>
 </project>
