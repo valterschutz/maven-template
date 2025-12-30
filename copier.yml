@@ -6,13 +6,13 @@ project_name:
   type: str
   help: What is your project name?
 
-group_id:
+group_name:
   type: str
-  help: What is your group ID?
+  help: What is your group name? Your group ID will become com.{group_name}
 
 artifact_id:
   type: str
-  help: What is your artifact ID?
+  help: What is your artifact ID? Your package will become com.{group_name}.{artifact_id}
 
 main_class:
   type: str
