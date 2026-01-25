@@ -1,35 +1,9 @@
-package com.{{group_name}};
+package com.{{group_name}}.{{artifact_id}};
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.jupiter.api.Test;
 
-public class {{main_class}}Test
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public {{main_class}}Test( String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( {{main_class}}Test.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void test{{main_class}}()
-    {
-        assertTrue( true );
-    }
+class {{main_class}}Test {
+  @Test
+  void empty() {
+  }
 }

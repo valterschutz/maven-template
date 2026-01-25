@@ -8,12 +8,18 @@ project_name:
 
 group_name:
   type: str
-  help: What is your group name? Your group ID will become com.{group_name}
+  help: What is your group name? The group id will became com.<group_name>
 
 artifact_id:
   type: str
-  help: What is your artifact ID? Your package will become com.{group_name}.{artifact_id}
+  help: What is your artifact ID? Your package will become {group_id}.{artifact_id}
 
 main_class:
   type: str
-  help: What is your main class?
+  help: What is your main class called?
+  default: Main
+
+java_version:
+  type: int
+  help: Which java version do you want to use?
+  default: 21
