@@ -1,3 +1,5 @@
 Configures a Maven project with
-- an executable jar file
-- exec:java goal
+- An executable jar file including all dependencies (uber jar)
+- The `exec:java` goal
+- Testing with JUnit
+- raylib dependency
