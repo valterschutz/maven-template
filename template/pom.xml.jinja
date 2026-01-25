@@ -10,7 +10,7 @@
   <properties>
     <maven.compiler.release>{{java_version}}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <main.class>com.{{group_name}}.{{artifact_id}}.{{main_class}}</main.class>
+    <main.class>com.{{group_name}}.{{artifact_id|replace('-','_')}}.{{main_class}}</main.class>
   </properties>
   <dependencies>
     <dependency>
