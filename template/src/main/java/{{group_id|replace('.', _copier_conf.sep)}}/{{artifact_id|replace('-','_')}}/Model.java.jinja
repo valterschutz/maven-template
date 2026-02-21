@@ -1,0 +1,16 @@
+package {{group_id}}.{{artifact_id|replace('-','_')}};
+
+public class Model
+{
+    private float elapsedTime = 0f;
+
+    public void update( float dt )
+    {
+        elapsedTime += dt;
+    }
+
+    public float getElapsedTime()
+    {
+        return elapsedTime;
+    }
+}

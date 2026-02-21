@@ -1,9 +1,27 @@
 package {{group_id}}.{{artifact_id|replace('-','_')}};
 
+import static com.raylib.Raylib.*;
+
 public class {{main_class}}
 {
+    private static final int SCREEN_WIDTH = 800;
+    private static final int SCREEN_HEIGHT = 450;
+
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        InitWindow( SCREEN_WIDTH, SCREEN_HEIGHT, "{{project_name}}" );
+        SetTargetFPS( 60 );
+
+        Model model = new Model();
+        View view = new View( model );
+        Controller controller = new Controller( model, view );
+
+        while ( !WindowShouldClose() )
+        {
+            model.update( GetFrameTime() );
+            view.update();
+        }
+
+        CloseWindow();
     }
 }
