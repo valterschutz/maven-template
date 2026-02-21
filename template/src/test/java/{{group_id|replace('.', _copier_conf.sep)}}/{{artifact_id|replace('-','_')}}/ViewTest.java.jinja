@@ -7,15 +7,6 @@ import org.junit.jupiter.api.Test;
 
 class ViewTest {
   @Test
-  void viewHoldsModel() {
-    Model model = new Model();
-
-    View view = new View(model);
-
-    assertNotNull(view);
-  }
-
-  @Test
   void registeredListenerIsCalled() {
     View view = new View(new Model());
     boolean[] called = {false};
