@@ -6,13 +6,13 @@ project_name:
   type: str
   help: What is your project name? You can include spaces.
 
-group_name:
+group_id:
   type: str
-  help: What is your group name? The group id will became com.<group_name>. It should neither contain dashes or underscores.
+  help: What is your group ID? Use reverse domain notation, e.g. org.codehaus.mojo. Dots are allowed; dashes and underscores are not.
 
 artifact_id:
   type: str
-  help: What is your artifact ID? Use dashes. Your package will become com.<group_name>.<artifact_id> but with dashes replaced by underscores.
+  help: What is your artifact ID? Use dashes, e.g. exec-maven-plugin. Your base package will be <group_id>.<artifact_id> with dashes replaced by underscores.
 
 main_class:
   type: str
