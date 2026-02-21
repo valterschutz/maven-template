@@ -1,30 +1,28 @@
 package {{group_id}}.{{artifact_id|replace('-','_')}};
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class ViewTest
-{
-    @Test
-    void viewHoldsModel()
-    {
-        Model model = new Model();
+import org.junit.jupiter.api.Test;
 
-        View view = new View( model );
+class ViewTest {
+  @Test
+  void viewHoldsModel() {
+    Model model = new Model();
 
-        assertNotNull( view );
-    }
+    View view = new View(model);
 
-    @Test
-    void registeredListenerIsCalled()
-    {
-        View view = new View( new Model() );
-        boolean[] called = { false };
-        view.setOnKeyPressListener( () -> called[0] = true );
+    assertNotNull(view);
+  }
 
-        view.fireOnKeyPress();
+  @Test
+  void registeredListenerIsCalled() {
+    View view = new View(new Model());
+    boolean[] called = {false};
+    view.setOnKeyPressListener(() -> called[0] = true);
 
-        assertTrue( called[0] );
-    }
+    view.fireOnKeyPress();
+
+    assertTrue(called[0]);
+  }
 }

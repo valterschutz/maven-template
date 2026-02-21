@@ -1,18 +1,17 @@
 package {{group_id}}.{{artifact_id|replace('-','_')}};
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ControllerTest
-{
-    @Test
-    void controllerHoldsModel()
-    {
-        Model model = new Model();
-        View view = new View( model );
+import org.junit.jupiter.api.Test;
 
-        Controller controller = new Controller( model, view );
+class ControllerTest {
+  @Test
+  void controllerHoldsModel() {
+    Model model = new Model();
+    View view = new View(model);
 
-        assertNotNull( controller );
-    }
+    Controller controller = new Controller(model, view);
+
+    assertNotNull(controller);
+  }
 }

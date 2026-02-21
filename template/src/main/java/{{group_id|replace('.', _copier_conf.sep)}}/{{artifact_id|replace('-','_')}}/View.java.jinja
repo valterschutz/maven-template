@@ -3,45 +3,37 @@ package {{group_id}}.{{artifact_id|replace('-','_')}};
 import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
-public class View
-{
-    private final Model model;
-    private Runnable onKeyPressListener = () -> {};
+public class View {
+  private final Model model;
+  private Runnable onKeyPressListener = () -> {};
 
-    public View( Model model )
-    {
-        this.model = model;
-    }
+  public View(Model model) {
+    this.model = model;
+  }
 
-    public void setOnKeyPressListener( Runnable listener )
-    {
-        this.onKeyPressListener = listener;
-    }
+  public void setOnKeyPressListener(Runnable listener) {
+    this.onKeyPressListener = listener;
+  }
 
-    public void fireOnKeyPress()
-    {
-        onKeyPressListener.run();
-    }
+  public void fireOnKeyPress() {
+    onKeyPressListener.run();
+  }
 
-    public void update()
-    {
-        processInput();
-        draw();
-    }
+  public void update() {
+    processInput();
+    draw();
+  }
 
-    private void processInput()
-    {
-        if ( IsKeyPressed( KEY_SPACE ) )
-        {
-            fireOnKeyPress();
-        }
+  private void processInput() {
+    if (IsKeyPressed(KEY_SPACE)) {
+      fireOnKeyPress();
     }
+  }
 
-    private void draw()
-    {
-        BeginDrawing();
-        ClearBackground( RAYWHITE );
-        DrawRectangle( 100, 100, 200, 150, MAROON );
-        EndDrawing();
-    }
+  private void draw() {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+    DrawRectangle(100, 100, 200, 150, MAROON);
+    EndDrawing();
+  }
 }

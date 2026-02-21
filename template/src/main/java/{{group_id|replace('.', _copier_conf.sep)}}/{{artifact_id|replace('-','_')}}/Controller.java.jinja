@@ -1,16 +1,12 @@
 package {{group_id}}.{{artifact_id|replace('-','_')}};
 
-public class Controller
-{
-    private final Model model;
+public class Controller {
+  private final Model model;
 
-    public Controller( Model model, View view )
-    {
-        this.model = model;
-        view.setOnKeyPressListener( this::onKeyPress );
-    }
+  public Controller(Model model, View view) {
+    this.model = model;
+    view.setOnKeyPressListener(this::onKeyPress);
+  }
 
-    private void onKeyPress()
-    {
-    }
+  private void onKeyPress() {}
 }
