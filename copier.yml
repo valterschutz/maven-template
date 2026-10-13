@@ -1,6 +1,6 @@
 _min_copier_version: 9.10.3
 _subdirectory: template
-_answers_file: maven-template-answers.yml
+_answers_file: .copier/maven-template-answers.yml
 
 project_name:
   type: str
@@ -23,3 +23,9 @@ java_version:
   type: int
   help: Which java version do you want to use?
   default: 21
+
+# Computed, not asked. Keeps `|` out of template file names, which Windows forbids.
+package_dir:
+  type: str
+  default: "{{ group_id | replace('.', '/') }}/{{ artifact_id | replace('-', '_') }}"
+  when: false
