@@ -19,13 +19,6 @@ This repo is a [Copier](https://copier.readthedocs.io/) template. You need Copie
    - `artifact_id`: dash-separated, e.g. `exec-maven-plugin`. The base package is `<group_id>.<artifact_id>` with dashes replaced by underscores.
    - `main_class`: name of the main class (default `Main`).
    - `java_version`: Java version to compile for (default `21`).
-3. Put the generated project under version control:
-   ```
-   cd my-project
-   git init
-   git add .
-   git commit -m "Initial commit from maven-template"
-   ```
 
 ### Without Copier
 
