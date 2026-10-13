@@ -2,6 +2,9 @@ _min_copier_version: 9.10.3
 _subdirectory: template
 _answers_file: .copier/maven-template-answers.yml
 
+_skip_if_exists:
+  - flake.lock
+
 project_name:
   type: str
   help: What is your project name? You can include spaces.
