@@ -1,0 +1,31 @@
+{
+  description = "Java dev shell";
+
+  inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
+  outputs =
+    { self, nixpkgs }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+      jdk = pkgs.jdk{{java_version}};
+    in
+    {
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [
+          jdk
+          (pkgs.maven.override { jdk_headless = jdk; })
+        ];
+
+        # GLFW loads these libraries dynamically.
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+          pkgs.libx11
+          pkgs.libxcursor
+          pkgs.libxrandr
+          pkgs.libxinerama
+          pkgs.libxi
+          pkgs.libglvnd
+        ] + ":/run/opengl-driver/lib";
+      };
+    };
+}

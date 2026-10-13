@@ -61,6 +61,8 @@ mvn package
 java -jar target/<artifact_id>-1.0-SNAPSHOT.jar
 ```
 
+For NixOS-specific setup, see [docs/nixos.md](docs/nixos.md).
+
 ## Testing
 
 ```
