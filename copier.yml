@@ -8,14 +8,17 @@ _skip_if_exists:
 project_name:
   type: str
   help: What is your project name? You can include spaces.
+  default: My Project
 
 group_id:
   type: str
   help: What is your group ID? Use reverse domain notation, e.g. org.codehaus.mojo. Dots are allowed; dashes and underscores are not.
+  default: com.example
 
 artifact_id:
   type: str
   help: What is your artifact ID? Use dashes, e.g. exec-maven-plugin. Your base package will be <group_id>.<artifact_id> with dashes replaced by underscores.
+  default: my-project
 
 main_class:
   type: str

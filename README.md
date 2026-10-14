@@ -10,13 +10,13 @@ This repo is a [Copier](https://copier.readthedocs.io/) template. You need Copie
 
 1. Generate the project into a new directory:
    ```
-   copier copy gh:valterschutz/maven-template my-project
+   copier copy gh:valterschutz/maven-template <folder-name>
    ```
-   Copier uses the latest tagged version of the template. Use `--vcs-ref <tag>` to pick another version.
-2. Answer the prompts:
-   - `project_name`: human-readable name, spaces allowed.
-   - `group_id`: reverse domain notation, e.g. `org.codehaus.mojo`.
-   - `artifact_id`: dash-separated, e.g. `exec-maven-plugin`. The base package is `<group_id>.<artifact_id>` with dashes replaced by underscores.
+   replacing `<folder-name>` with the folder you want to create. Copier uses the latest tagged version of the template. Use `--vcs-ref <tag>` to pick another version.
+2. Answer the prompts. Every prompt has a default, so you can press Enter through all of them (or pass `--defaults`) for a quick test project:
+   - `project_name`: human-readable name, spaces allowed (default `My Project`).
+   - `group_id`: reverse domain notation, e.g. `org.codehaus.mojo` (default `com.example`).
+   - `artifact_id`: dash-separated, e.g. `exec-maven-plugin`. The base package is `<group_id>.<artifact_id>` with dashes replaced by underscores (default `my-project`).
    - `main_class`: name of the main class (default `Main`).
    - `java_version`: Java version to compile for (default `21`).
 
