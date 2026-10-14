@@ -1,0 +1,3 @@
+# Keep the Maven wrapper scripts runnable regardless of the Git line-ending settings.
+mvnw text eol=lf
+*.cmd text eol=crlf

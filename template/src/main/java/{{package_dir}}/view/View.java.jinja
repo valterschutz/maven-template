@@ -1,0 +1,59 @@
+package {{group_id}}.{{artifact_id|replace('-','_')}}.view;
+
+import static com.raylib.Colors.*;
+import static com.raylib.Raylib.*;
+
+{# The import order depends on the package name, so sort like google-java-format does. -#}
+{% set pkg = group_id ~ '.' ~ artifact_id|replace('-', '_') -%}
+{% for name in [pkg ~ '.model.Model', pkg ~ '.model.Model.Position', pkg ~ '.model.Model.Size', 'java.util.EnumMap', 'java.util.Map'] | sort(case_sensitive=true) -%}
+import {{ name }};
+{% endfor %}
+public class View {
+  private final Model model;
+  private final Map<Key, Runnable> keyPressListeners = new EnumMap<>(Key.class);
+
+  public enum Key {
+    SPACE(KEY_SPACE),
+    LEFT(KEY_LEFT),
+    RIGHT(KEY_RIGHT),
+    UP(KEY_UP),
+    DOWN(KEY_DOWN);
+
+    private final int raylibCode;
+
+    Key(int raylibCode) {
+      this.raylibCode = raylibCode;
+    }
+  }
+
+  public View(Model model) {
+    this.model = model;
+  }
+
+  public void setOnKeyPressListener(Key key, Runnable listener) {
+    keyPressListeners.put(key, listener);
+  }
+
+  public void update() {
+    processInput();
+    draw();
+  }
+
+  private void processInput() {
+    keyPressListeners.forEach(
+        (key, listener) -> {
+          if (IsKeyPressed(key.raylibCode)) {
+            listener.run();
+          }
+        });
+  }
+
+  private void draw() {
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+    Position position = model.getPosition();
+    Size size = model.getSize();
+    DrawRectangle((int) position.x(), (int) position.y(), size.width(), size.height(), MAROON);
+    EndDrawing();
+  }
+}

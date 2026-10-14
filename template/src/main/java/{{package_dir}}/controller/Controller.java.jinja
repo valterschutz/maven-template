@@ -1,0 +1,25 @@
+package {{group_id}}.{{artifact_id|replace('-','_')}}.controller;
+
+import {{group_id}}.{{artifact_id|replace('-','_')}}.model.Model;
+import {{group_id}}.{{artifact_id|replace('-','_')}}.model.Model.Acceleration;
+import {{group_id}}.{{artifact_id|replace('-','_')}}.view.View;
+import {{group_id}}.{{artifact_id|replace('-','_')}}.view.View.Key;
+
+public class Controller {
+  /** Acceleration from one key press, in pixels per second squared. */
+  private static final float ACCELERATION_SCALING = 100f;
+
+  private final Model model;
+
+  public Controller(Model model, View view) {
+    this.model = model;
+    view.setOnKeyPressListener(Key.LEFT, () -> accelerate(-1, 0));
+    view.setOnKeyPressListener(Key.RIGHT, () -> accelerate(1, 0));
+    view.setOnKeyPressListener(Key.UP, () -> accelerate(0, -1));
+    view.setOnKeyPressListener(Key.DOWN, () -> accelerate(0, 1));
+  }
+
+  private void accelerate(float x, float y) {
+    model.setAcceleration(new Acceleration(x * ACCELERATION_SCALING, y * ACCELERATION_SCALING));
+  }
+}

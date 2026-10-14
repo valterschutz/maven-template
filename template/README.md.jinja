@@ -1,0 +1,66 @@
+# {{project_name}}
+
+A Java game built with [raylib](https://www.raylib.com/) (through [jaylib](https://github.com/electronstudio/jaylib)), structured with the Model-View-Controller (MVC) pattern.
+
+## Requirements
+
+A JDK, version {{java_version}} or later. You don't need to install Maven: the included Maven wrapper (`mvnw`) downloads the right version the first time you run it.
+
+On Windows, use `mvnw.cmd` instead of `./mvnw` in the commands below.
+
+## Running
+
+Run directly via Maven (recompiles only changed files):
+```
+./mvnw compile exec:java
+```
+
+Build and run a jar file that includes all dependencies:
+```
+./mvnw package
+java -jar target/{{artifact_id}}-1.0-SNAPSHOT.jar
+```
+
+## Testing and formatting
+
+Run the tests:
+```
+./mvnw test
+```
+
+The code must be formatted with [google-java-format](https://github.com/google/google-java-format). `./mvnw verify` runs the tests and fails if any file is not formatted. To format all files:
+```
+./mvnw com.spotify.fmt:fmt-maven-plugin:format
+```
+
+## Project structure
+
+```
+src/main/java/{{package_dir}}/
+├── {{main_class}}.java
+├── model/
+├── view/
+└── controller/
+src/test/java/{{package_dir}}/
+└── model/
+```
+
+`{{main_class}}.java` creates the window, wires up the model, view and controller, and runs the game loop. The other packages are described in [MVC rules](#mvc-rules). Put new classes in the package of the part they belong to, and their tests in the matching package under `src/test`.
+
+## MVC rules
+
+Each frame, `{{main_class}}` calls `model.update(dt)` to advance the game, then `view.update()`, which reads input and draws the model.
+
+- **Model** holds the game state and the rules for how it changes. It must not use raylib, so it can be tested without opening a window.
+- **View** draws the model and turns raw key presses into events. It reads from the model but never changes it.
+- **Controller** registers listeners with the view and decides how to change the model when an event happens. It never draws and never reads raw input.
+
+```
+key press ──► View ──event──► Controller ──changes──► Model
+               ▲                                        │
+               └──────────────── reads ─────────────────┘
+```
+
+## NixOS
+
+The included `flake.nix` provides the JDK, Maven, and the graphics libraries that raylib loads at runtime. With [direnv](https://direnv.net/) and nix-direnv, the `.envrc` loads it automatically; otherwise run `nix develop`.

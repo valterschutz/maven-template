@@ -2,6 +2,10 @@ package {{group_id}}.{{artifact_id|replace('-','_')}};
 
 import static com.raylib.Raylib.*;
 
+import {{group_id}}.{{artifact_id|replace('-','_')}}.controller.Controller;
+import {{group_id}}.{{artifact_id|replace('-','_')}}.model.Model;
+import {{group_id}}.{{artifact_id|replace('-','_')}}.view.View;
+
 public class {{main_class}} {
   private static final int SCREEN_WIDTH = 800;
   private static final int SCREEN_HEIGHT = 450;
@@ -12,7 +16,8 @@ public class {{main_class}} {
 
     Model model = new Model();
     View view = new View(model);
-    Controller controller = new Controller(model, view);
+    // The controller registers its listeners with the view, so we don't need to keep a reference.
+    new Controller(model, view);
 
     while (!WindowShouldClose()) {
       model.update(GetFrameTime());

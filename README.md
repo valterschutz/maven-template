@@ -1,8 +1,13 @@
 Configures a Maven project with
+- A raylib game skeleton split into `model`, `view` and `controller` packages
+- The Maven wrapper (`mvnw`), so only a JDK needs to be installed
 - An executable jar file including all dependencies (uber jar)
 - The `exec:java` goal
 - Testing with JUnit
+- A formatting check with google-java-format
 - raylib dependency
+
+The generated project has its own README explaining how to run it and the MVC rules.
 
 ## Creating a new project
 
@@ -24,10 +29,10 @@ This repo is a [Copier](https://copier.readthedocs.io/) template. You need Copie
 
 If you can't run Copier, e.g. on a locked-down Windows machine, you can fill in the template by hand. You won't be able to pull in template updates later.
 
-1. Download the repo (**Code → Download ZIP** on GitHub, or `git clone`) and copy the contents of `template/` into your new project folder. Leave out the `.copier` folder.
+1. Download the repo (**Code → Download ZIP** on GitHub, or `git clone`) and copy the contents of `template/`, including hidden files such as `.mvn` and `.gitignore`, into your new project folder. Leave out the `.copier` folder.
 2. Remove the `.jinja` suffix from every file name, e.g. `pom.xml.jinja` → `pom.xml`.
-3. In both `src/main/java` and `src/test/java`, replace the `{{package_dir}}` folder with nested folders for your package: the group ID split on dots, then the artifact ID with dashes replaced by underscores. For group ID `com.example` and artifact ID `my-game` that is `com/example/my_game`.
-4. Rename `{{main_class}}.java` and `{{main_class}}Test.java` to use your main class name, e.g. `Main.java` and `MainTest.java`.
+3. In both `src/main/java` and `src/test/java`, replace the `{{package_dir}}` folder with nested folders for your package, keeping its contents: the group ID split on dots, then the artifact ID with dashes replaced by underscores. For group ID `com.example` and artifact ID `my-game` that is `com/example/my_game`.
+4. Rename `{{main_class}}.java` to use your main class name, e.g. `Main.java`.
 5. Find and replace across all files (most editors can do this for a whole folder):
 
    | Placeholder | Replace with | Example |
@@ -38,8 +43,10 @@ If you can't run Copier, e.g. on a locked-down Windows machine, you can fill in 
    | `{{project_name}}` | project name | `My Game` |
    | `{{main_class}}` | main class name | `Main` |
    | `{{java_version}}` | Java version | `21` |
+   | `{{package_dir}}` | package folder path | `com/example/my_game` |
 
-6. Search for `{{` to check that nothing is left, then run `mvn test`.
+6. `View.java` and `ModelTest.java` build part of their imports in a `{% for %}` loop, because the correct order depends on your package name. Replace everything from the `{#` comment line to `{% endfor %}` with one `import <name>;` line per name in the list, using your package in place of `pkg ~ '...'`, e.g. `import com.example.my_game.model.Model;`. Then run `./mvnw com.spotify.fmt:fmt-maven-plugin:format` to put the imports in the right order.
+7. Search for `{{` and `{%` to check that nothing is left, then run `./mvnw verify` (`mvnw.cmd verify` on Windows).
 
 ### Updating
 
@@ -50,14 +57,16 @@ copier update --answers-file .copier/maven-template-answers.yml
 
 ## Running
 
+On Windows, use `mvnw.cmd` instead of `./mvnw`.
+
 **Run directly via Maven** (recompiles only changed files):
 ```
-mvn compile exec:java
+./mvnw compile exec:java
 ```
 
 **Build and run the uber jar:**
 ```
-mvn package
+./mvnw package
 java -jar target/<artifact_id>-1.0-SNAPSHOT.jar
 ```
 
@@ -66,5 +75,10 @@ For NixOS-specific setup, see [docs/nixos.md](docs/nixos.md).
 ## Testing
 
 ```
-mvn test
+./mvnw test
+```
+
+`./mvnw verify` also checks formatting. To format all files:
+```
+./mvnw com.spotify.fmt:fmt-maven-plugin:format
 ```
