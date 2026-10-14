@@ -28,10 +28,7 @@ Run the tests:
 ./mvnw test
 ```
 
-The code must be formatted with [google-java-format](https://github.com/google/google-java-format). `./mvnw verify` runs the tests and fails if any file is not formatted. To format all files:
-```
-./mvnw com.spotify.fmt:fmt-maven-plugin:format
-```
+Every Maven build first formats all Java files with [google-java-format](https://github.com/google/google-java-format), so you don't need to format them yourself. If your editor shows a file as changed on disk after a build, reload it.
 
 ## Project structure
 

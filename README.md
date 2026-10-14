@@ -4,7 +4,7 @@ Configures a Maven project with
 - An executable jar file including all dependencies (uber jar)
 - The `exec:java` goal
 - Testing with JUnit
-- A formatting check with google-java-format
+- Automatic formatting with google-java-format on every build
 - raylib dependency
 
 The generated project has its own README explaining how to run it and the MVC rules.
@@ -45,7 +45,7 @@ If you can't run Copier, e.g. on a locked-down Windows machine, you can fill in 
    | `{{java_version}}` | Java version | `21` |
    | `{{package_dir}}` | package folder path | `com/example/my_game` |
 
-6. `View.java` and `ModelTest.java` build part of their imports in a `{% for %}` loop, because the correct order depends on your package name. Replace everything from the `{#` comment line to `{% endfor %}` with one `import <name>;` line per name in the list, using your package in place of `pkg ~ '...'`, e.g. `import com.example.my_game.model.Model;`. Then run `./mvnw com.spotify.fmt:fmt-maven-plugin:format` to put the imports in the right order.
+6. `View.java` and `ModelTest.java` build part of their imports in a `{% for %}` loop, because the correct order depends on your package name. Replace everything from the `{#` comment line to `{% endfor %}` with one `import <name>;` line per name in the list, using your package in place of `pkg ~ '...'`, e.g. `import com.example.my_game.model.Model;`. The order doesn't matter: the build formats the files and sorts the imports.
 7. Search for `{{` and `{%` to check that nothing is left, then run `./mvnw verify` (`mvnw.cmd verify` on Windows).
 
 ### Updating
@@ -78,7 +78,4 @@ For NixOS-specific setup, see [docs/nixos.md](docs/nixos.md).
 ./mvnw test
 ```
 
-`./mvnw verify` also checks formatting. To format all files:
-```
-./mvnw com.spotify.fmt:fmt-maven-plugin:format
-```
+Every build first formats all Java files with google-java-format.
