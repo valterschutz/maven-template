@@ -9,26 +9,36 @@ project_name:
   type: str
   help: What is your project name? You can include spaces.
   default: My Project
+  validator: >-
+    {% if not (project_name | regex_search('\\S')) %}The project name must not be empty.{% elif project_name | regex_search('["<&\\\\]') %}The project name must not contain ", <, & or \.{% endif %}
 
 group_id:
   type: str
   help: What is your group ID? Use reverse domain notation, e.g. org.codehaus.mojo. Dots are allowed; dashes and underscores are not.
   default: com.example
+  validator: >-
+    {% if not (group_id | regex_search('^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)*$')) %}The group ID must be lowercase words separated by dots, each starting with a letter, e.g. com.example.{% endif %}
 
 artifact_id:
   type: str
   help: What is your artifact ID? Use dashes, e.g. exec-maven-plugin. Your base package will be <group_id>.<artifact_id> with dashes replaced by underscores.
   default: my-project
+  validator: >-
+    {% if not (artifact_id | regex_search('^[a-z][a-z0-9]*(-[a-z0-9]+)*$')) %}The artifact ID must be lowercase words separated by single dashes, starting with a letter, e.g. my-project.{% endif %}
 
 main_class:
   type: str
   help: What is your main class called?
   default: Main
+  validator: >-
+    {% if not (main_class | regex_search('^[A-Z][A-Za-z0-9]*$')) %}The main class must start with an uppercase letter and contain only letters and digits, e.g. Main.{% endif %}
 
 java_version:
   type: int
   help: Which java version do you want to use?
   default: 21
+  validator: >-
+    {% if java_version < 21 %}The Java version must be 21 or later.{% endif %}
 
 # Computed, not asked. Keeps `|` out of template file names, which Windows forbids.
 package_dir:

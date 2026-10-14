@@ -49,11 +49,11 @@ src/test/java/{{package_dir}}/
 Each frame, `{{main_class}}` calls `model.update(dt)` to advance the game, then `view.update()`, which reads input and draws the model.
 
 - **Model** holds the game state and the rules for how it changes. It must not use raylib, so it can be tested without opening a window.
-- **View** draws the model and turns raw key presses into events. It reads from the model but never changes it.
+- **View** draws the model and turns raw keyboard input into events, e.g. "these arrow keys are held this frame". It reads from the model but never changes it.
 - **Controller** registers listeners with the view and decides how to change the model when an event happens. It never draws and never reads raw input.
 
 ```
-key press ──► View ──event──► Controller ──changes──► Model
+ keyboard ──► View ──event──► Controller ──changes──► Model
                ▲                                        │
                └──────────────── reads ─────────────────┘
 ```

@@ -1,0 +1,2 @@
+# Keep the scripts runnable in Git Bash regardless of the Git line-ending settings.
+*.sh text eol=lf

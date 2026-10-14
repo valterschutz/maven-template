@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 {# The import order depends on the package name, so sort like google-java-format does. -#}
 {% set pkg = group_id ~ '.' ~ artifact_id|replace('-', '_') -%}
-{% for name in [pkg ~ '.model.Model.Acceleration', pkg ~ '.model.Model.Position', pkg ~ '.model.Model.Size', pkg ~ '.model.Model.Velocity', 'org.junit.jupiter.api.Test'] | sort(case_sensitive=true) -%}
+{% for name in [pkg ~ '.model.Model.Position', pkg ~ '.model.Model.Size', pkg ~ '.model.Model.Velocity', 'org.junit.jupiter.api.Test'] | sort(case_sensitive=true) -%}
 import {{ name }};
 {% endfor %}
 class ModelTest {
@@ -12,37 +12,22 @@ class ModelTest {
 
   @Test
   void positionMovesWithVelocityAfterUpdate() {
-    Model model =
-        new Model(
-            new Position(100f, 200f),
-            new Velocity(10f, -20f),
-            new Acceleration(0f, 0f),
-            new Size(50, 50));
+    Model model = new Model(new Position(100f, 200f), new Velocity(10f, -20f), new Size(50, 50));
 
     model.update(0.5f);
 
-    assertEquals(10f, model.getVelocity().x(), TOLERANCE);
-    assertEquals(-20f, model.getVelocity().y(), TOLERANCE);
     assertEquals(105f, model.getPosition().x(), TOLERANCE);
     assertEquals(190f, model.getPosition().y(), TOLERANCE);
   }
 
   @Test
-  void accelerationChangesVelocityBeforeMoving() {
-    Model model =
-        new Model(
-            new Position(0f, 0f),
-            new Velocity(10f, 20f),
-            new Acceleration(100f, -20f),
-            new Size(50, 50));
+  void positionStaysWhenVelocityIsZero() {
+    Model model = new Model(new Position(100f, 200f), new Velocity(10f, -20f), new Size(50, 50));
 
+    model.setVelocity(new Velocity(0f, 0f));
     model.update(0.5f);
 
-    // Velocity: (10 + 100 * 0.5, 20 - 20 * 0.5) = (60, 10).
-    // Position: (0 + 60 * 0.5, 0 + 10 * 0.5) = (30, 5).
-    assertEquals(60f, model.getVelocity().x(), TOLERANCE);
-    assertEquals(10f, model.getVelocity().y(), TOLERANCE);
-    assertEquals(30f, model.getPosition().x(), TOLERANCE);
-    assertEquals(5f, model.getPosition().y(), TOLERANCE);
+    assertEquals(100f, model.getPosition().x(), TOLERANCE);
+    assertEquals(200f, model.getPosition().y(), TOLERANCE);
   }
 }

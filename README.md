@@ -27,26 +27,16 @@ This repo is a [Copier](https://copier.readthedocs.io/) template. You need Copie
 
 ### Without Copier
 
-If you can't run Copier, e.g. on a locked-down Windows machine, you can fill in the template by hand. You won't be able to pull in template updates later.
+If you can't install Copier, use the `new-project.sh` script in this repo instead. It asks the same questions and creates the same project. It only needs bash, so on Windows run it in Git Bash, which comes with [Git for Windows](https://git-scm.com/downloads/win).
 
-1. Download the repo (**Code → Download ZIP** on GitHub, or `git clone`) and copy the contents of `template/`, including hidden files such as `.mvn` and `.gitignore`, into your new project folder. Leave out the `.copier` folder.
-2. Remove the `.jinja` suffix from every file name, e.g. `pom.xml.jinja` → `pom.xml`.
-3. In both `src/main/java` and `src/test/java`, replace the `{{package_dir}}` folder with nested folders for your package, keeping its contents: the group ID split on dots, then the artifact ID with dashes replaced by underscores. For group ID `com.example` and artifact ID `my-game` that is `com/example/my_game`.
-4. Rename `{{main_class}}.java` to use your main class name, e.g. `Main.java`.
-5. Find and replace across all files (most editors can do this for a whole folder):
+1. Download the repo: `git clone https://github.com/valterschutz/maven-template.git`, or **Code → Download ZIP** on GitHub and unzip it.
+2. Open a terminal (Git Bash on Windows) in the downloaded folder and run:
+   ```
+   bash new-project.sh <folder-name>
+   ```
+   replacing `<folder-name>` with the folder you want to create, e.g. `../my-game`. Answer the prompts as described above, or add `--defaults` to skip them. If you leave out `<folder-name>`, the script asks for it.
 
-   | Placeholder | Replace with | Example |
-   | --- | --- | --- |
-   | `{{artifact_id\|replace('-','_')}}` | artifact ID with dashes replaced by underscores | `my_game` |
-   | `{{artifact_id}}` | artifact ID | `my-game` |
-   | `{{group_id}}` | group ID | `com.example` |
-   | `{{project_name}}` | project name | `My Game` |
-   | `{{main_class}}` | main class name | `Main` |
-   | `{{java_version}}` | Java version | `21` |
-   | `{{package_dir}}` | package folder path | `com/example/my_game` |
-
-6. `View.java` and `ModelTest.java` build part of their imports in a `{% for %}` loop, because the correct order depends on your package name. Replace everything from the `{#` comment line to `{% endfor %}` with one `import <name>;` line per name in the list, using your package in place of `pkg ~ '...'`, e.g. `import com.example.my_game.model.Model;`. The order doesn't matter: the build formats the files and sorts the imports.
-7. Search for `{{` and `{%` to check that nothing is left, then run `./mvnw verify` (`mvnw.cmd verify` on Windows).
+The project gets the same answers file as with Copier, so you can use `copier update` later if you install Copier. This only works if you cloned the repo with Git: a ZIP download doesn't record which template version you used.
 
 ### Updating
 
@@ -79,3 +69,11 @@ For NixOS-specific setup, see [docs/nixos.md](docs/nixos.md).
 ```
 
 Every build first formats all Java files with google-java-format.
+
+## Developing the template
+
+`new-project.sh` reimplements the parts of Copier the template uses, so it has to be kept in sync with `copier.yml` and the `.jinja` files. The script fails on Jinja syntax it doesn't understand. After changing the template, run:
+```
+tests/compare-with-copier.sh
+```
+It needs Copier, and checks that the script and Copier create the same files for several sets of answers.

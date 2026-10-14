@@ -9,42 +9,32 @@ public class Model {
   }
 
   /** In pixels per second. */
-  public record Velocity(float x, float y) {
-    public Velocity changeBy(Acceleration acceleration, float dt) {
-      return new Velocity(x + acceleration.x() * dt, y + acceleration.y() * dt);
-    }
-  }
-
-  /** In pixels per second squared. */
-  public record Acceleration(float x, float y) {}
+  public record Velocity(float x, float y) {}
 
   /** In pixels. */
   public record Size(int width, int height) {}
 
   private Position position;
   private Velocity velocity;
-  private Acceleration acceleration;
   private final Size size;
 
   public Model() {
-    this(new Position(100, 100), new Velocity(10, 10), new Acceleration(0, 0), new Size(200, 150));
+    this(new Position(100, 100), new Velocity(0, 0), new Size(200, 150));
   }
 
-  public Model(Position position, Velocity velocity, Acceleration acceleration, Size size) {
+  public Model(Position position, Velocity velocity, Size size) {
     this.position = position;
     this.velocity = velocity;
-    this.acceleration = acceleration;
     this.size = size;
   }
 
   /** Advances the simulation by {@code dt} seconds. */
   public void update(float dt) {
-    velocity = velocity.changeBy(acceleration, dt);
     position = position.moveBy(velocity, dt);
   }
 
-  public void setAcceleration(Acceleration acceleration) {
-    this.acceleration = acceleration;
+  public void setVelocity(Velocity velocity) {
+    this.velocity = velocity;
   }
 
   public Position getPosition() {

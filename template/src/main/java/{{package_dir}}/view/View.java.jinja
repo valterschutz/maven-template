@@ -5,15 +5,14 @@ import static com.raylib.Raylib.*;
 
 {# The import order depends on the package name, so sort like google-java-format does. -#}
 {% set pkg = group_id ~ '.' ~ artifact_id|replace('-', '_') -%}
-{% for name in [pkg ~ '.model.Model', pkg ~ '.model.Model.Position', pkg ~ '.model.Model.Size', 'java.util.EnumMap', 'java.util.Map'] | sort(case_sensitive=true) -%}
+{% for name in [pkg ~ '.model.Model', pkg ~ '.model.Model.Position', pkg ~ '.model.Model.Size', 'java.util.EnumSet', 'java.util.Set', 'java.util.function.Consumer'] | sort(case_sensitive=true) -%}
 import {{ name }};
 {% endfor %}
 public class View {
   private final Model model;
-  private final Map<Key, Runnable> keyPressListeners = new EnumMap<>(Key.class);
+  private Consumer<Set<Key>> heldKeysListener = heldKeys -> {};
 
   public enum Key {
-    SPACE(KEY_SPACE),
     LEFT(KEY_LEFT),
     RIGHT(KEY_RIGHT),
     UP(KEY_UP),
@@ -30,8 +29,9 @@ public class View {
     this.model = model;
   }
 
-  public void setOnKeyPressListener(Key key, Runnable listener) {
-    keyPressListeners.put(key, listener);
+  /** The listener is called every frame with the keys held down, which may be none. */
+  public void setOnHeldKeysListener(Consumer<Set<Key>> listener) {
+    heldKeysListener = listener;
   }
 
   public void update() {
@@ -40,12 +40,13 @@ public class View {
   }
 
   private void processInput() {
-    keyPressListeners.forEach(
-        (key, listener) -> {
-          if (IsKeyPressed(key.raylibCode)) {
-            listener.run();
-          }
-        });
+    Set<Key> heldKeys = EnumSet.noneOf(Key.class);
+    for (Key key : Key.values()) {
+      if (IsKeyDown(key.raylibCode)) {
+        heldKeys.add(key);
+      }
+    }
+    heldKeysListener.accept(heldKeys);
   }
 
   private void draw() {

@@ -1,25 +1,36 @@
 package {{group_id}}.{{artifact_id|replace('-','_')}}.controller;
 
-import {{group_id}}.{{artifact_id|replace('-','_')}}.model.Model;
-import {{group_id}}.{{artifact_id|replace('-','_')}}.model.Model.Acceleration;
-import {{group_id}}.{{artifact_id|replace('-','_')}}.view.View;
-import {{group_id}}.{{artifact_id|replace('-','_')}}.view.View.Key;
-
+{# The import order depends on the package name, so sort like google-java-format does. -#}
+{% set pkg = group_id ~ '.' ~ artifact_id|replace('-', '_') -%}
+{% for name in [pkg ~ '.model.Model', pkg ~ '.model.Model.Velocity', pkg ~ '.view.View', pkg ~ '.view.View.Key', 'java.util.Set'] | sort(case_sensitive=true) -%}
+import {{ name }};
+{% endfor %}
 public class Controller {
-  /** Acceleration from one key press, in pixels per second squared. */
-  private static final float ACCELERATION_SCALING = 100f;
+  /** Speed while an arrow key is held, in pixels per second. */
+  private static final float SPEED = 200f;
 
   private final Model model;
 
   public Controller(Model model, View view) {
     this.model = model;
-    view.setOnKeyPressListener(Key.LEFT, () -> accelerate(-1, 0));
-    view.setOnKeyPressListener(Key.RIGHT, () -> accelerate(1, 0));
-    view.setOnKeyPressListener(Key.UP, () -> accelerate(0, -1));
-    view.setOnKeyPressListener(Key.DOWN, () -> accelerate(0, 1));
+    view.setOnHeldKeysListener(this::move);
   }
 
-  private void accelerate(float x, float y) {
-    model.setAcceleration(new Acceleration(x * ACCELERATION_SCALING, y * ACCELERATION_SCALING));
+  private void move(Set<Key> heldKeys) {
+    float x = direction(heldKeys, Key.LEFT, Key.RIGHT);
+    float y = direction(heldKeys, Key.UP, Key.DOWN);
+    model.setVelocity(new Velocity(x * SPEED, y * SPEED));
+  }
+
+  /** Returns -1, 0 or 1, so holding both keys or neither gives 0. */
+  private static float direction(Set<Key> heldKeys, Key negative, Key positive) {
+    float direction = 0;
+    if (heldKeys.contains(negative)) {
+      direction -= 1;
+    }
+    if (heldKeys.contains(positive)) {
+      direction += 1;
+    }
+    return direction;
   }
 }
