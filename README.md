@@ -57,7 +57,7 @@ copier update --answers-file .copier/maven-template-answers.yml
 
 ## Running
 
-On Windows, use `mvnw.cmd` instead of `./mvnw`.
+The commands use the Maven wrapper (`./mvnw`) instead of `mvn`. It downloads the Maven version pinned in `.mvn/wrapper/maven-wrapper.properties` on first use, so you only need a JDK and everyone builds with the same Maven version. On Windows, use `mvnw.cmd` instead of `./mvnw`.
 
 **Run directly via Maven** (recompiles only changed files):
 ```
