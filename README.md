@@ -61,15 +61,23 @@ copier update --answers-file .copier/maven-template-answers.yml
 
 The commands use the Maven wrapper (`./mvnw`) instead of `mvn`. It downloads the Maven version pinned in `.mvn/wrapper/maven-wrapper.properties` on first use, so you only need a JDK and everyone builds with the same Maven version. On Windows, use `mvnw.cmd` instead of `./mvnw`.
 
-**Run directly via Maven** (recompiles only changed files):
+**Run directly via Maven (non-macOS only)** (recompiles only changed files; on macOS, use the jar instructions below):
 ```
 ./mvnw compile exec:java
 ```
 
 **Build and run the uber jar:**
+
+Non-macOS:
 ```
 ./mvnw package
 java -jar target/<artifact_id>-1.0-SNAPSHOT.jar
+```
+
+macOS:
+```
+./mvnw package
+java -XstartOnFirstThread --enable-native-access=ALL-UNNAMED -jar target/<artifact_id>-1.0-SNAPSHOT.jar
 ```
 
 For NixOS-specific setup, see [docs/nixos.md](docs/nixos.md).

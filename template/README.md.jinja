@@ -10,16 +10,25 @@ On Windows, use `mvnw.cmd` instead of `./mvnw` in the commands below.
 
 ## Running
 
-Run directly via Maven (recompiles only changed files):
+Run directly via Maven (non-macOS only; recompiles only changed files). On macOS, use the jar instructions below:
 ```
 ./mvnw compile exec:java
 ```
 
 Build and run a jar file that includes all dependencies:
+
+Non-macOS:
 ```
 ./mvnw package
 java -jar target/{{artifact_id}}-1.0-SNAPSHOT.jar
 ```
+
+macOS:
+```
+./mvnw package
+java -XstartOnFirstThread --enable-native-access=ALL-UNNAMED -jar target/{{artifact_id}}-1.0-SNAPSHOT.jar
+```
+
 
 ## Testing and formatting
 
